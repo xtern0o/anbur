@@ -47,7 +47,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 btn.setStyleSheet(
                     """
                     QPushButton {
-                        border-radius: 2px;
+                        background-color: #ededed;
+                        border-radius: 4px;
                         border: 1px solid;
                         box-shadow: 5px 5px 5px black;
                     }
@@ -55,7 +56,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                         background-color: #dbd0b0;
                         border: 2px solid;
                     }
-                    
                     """
                 )
                 btn.clicked.connect(self.clicked_on_btn)
