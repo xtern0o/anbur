@@ -181,7 +181,7 @@
       <property name="minimumSize">
        <size>
         <width>800</width>
-        <height>270</height>
+        <height>330</height>
        </size>
       </property>
       <property name="styleSheet">
@@ -263,6 +263,60 @@
     </item>
    </layout>
   </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>900</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>Файл</string>
+    </property>
+    <addaction name="action"/>
+    <addaction name="separator"/>
+    <addaction name="action_3"/>
+   </widget>
+   <widget class="QMenu" name="menu_2">
+    <property name="title">
+     <string>Помощь</string>
+    </property>
+    <addaction name="action_4"/>
+    <addaction name="action_5"/>
+    <addaction name="separator"/>
+    <addaction name="action_7"/>
+   </widget>
+   <addaction name="menu"/>
+   <addaction name="menu_2"/>
+  </widget>
+  <action name="action">
+   <property name="text">
+    <string>Настройки конфигурации</string>
+   </property>
+  </action>
+  <action name="action_3">
+   <property name="text">
+    <string>Выход</string>
+   </property>
+  </action>
+  <action name="action_4">
+   <property name="text">
+    <string>О проекте</string>
+   </property>
+  </action>
+  <action name="action_5">
+   <property name="text">
+    <string>Помощь</string>
+   </property>
+  </action>
+  <action name="action_7">
+   <property name="text">
+    <string>Обратная связь</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>
