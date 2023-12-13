@@ -44,6 +44,20 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                         btn.setText(word)
                     btn.setMaximumSize(60, 60)
                     btn.setMinimumSize(60, 60)
+                btn.setStyleSheet(
+                    """
+                    QPushButton {
+                        border-radius: 2px;
+                        border: 1px solid;
+                        box-shadow: 5px 5px 5px black;
+                    }
+                    QPushButton:hover {
+                        background-color: #dbd0b0;
+                        border: 2px solid;
+                    }
+                    
+                    """
+                )
                 btn.clicked.connect(self.clicked_on_btn)
                 size_policy = btn.sizePolicy()
                 size_policy.setHeightForWidth(btn.sizePolicy().hasHeightForWidth())
