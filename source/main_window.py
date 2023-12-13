@@ -12,26 +12,38 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         QFontDatabase.addApplicationFont('fonts/Everson Mono.ttf')
         self.font = QFont('Everson Mono')
-        self.font.setPointSize(24)
-        self.matrix = [['ё', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '='],
-                       ['й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ'],
-                       ['ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э'],
-                       ['я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю']]
+        self.font.setPointSize(20)
+        self.matrix = [
+            ['ё', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '='],
+            ['й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ'],
+            ['ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э'],
+            ['я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю'],
+            ['Ctrl', 'Win', 'Alt', 'Space', 'Alt', 'Ctrl']
+        ]
         self.generate_keyboard()
 
     def generate_keyboard(self):
-        for row in self.matrix:
+        for i, row in enumerate(self.matrix):
             layout = QHBoxLayout()
             for word in row:
                 btn = QPushButton(self)
                 btn.setFont(self.font)
                 btn.size()
-                if word in anbur:
-                    btn.setText(anbur[word])
+                if i == 4:
+                    if word == "Space":
+                        w, h = 330, 60
+                    else:
+                        w, h = 90, 60
+                        btn.setText(word)
+                    btn.setMaximumSize(w, h)
+                    btn.setMinimumSize(w, h)
                 else:
-                    btn.setText(word)
-                btn.setMaximumSize(70, 70)
-                btn.setMinimumSize(70, 70)
+                    if word in anbur:
+                        btn.setText(anbur[word])
+                    else:
+                        btn.setText(word)
+                    btn.setMaximumSize(60, 60)
+                    btn.setMinimumSize(60, 60)
                 btn.clicked.connect(self.clicked_on_btn)
                 size_policy = btn.sizePolicy()
                 size_policy.setHeightForWidth(btn.sizePolicy().hasHeightForWidth())
