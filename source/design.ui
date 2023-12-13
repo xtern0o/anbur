@@ -13,12 +13,6 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <property name="styleSheet">
-   <string notr="true">QFrame #frame {
-	border-radius: 2px;
-	border: 1px solid;
-}</string>
-  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0" columnstretch="0,0">
     <item row="0" column="0" colspan="2">
@@ -34,9 +28,6 @@
         <width>16777215</width>
         <height>50</height>
        </size>
-      </property>
-      <property name="styleSheet">
-       <string notr="true"/>
       </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
@@ -89,7 +80,7 @@
         </layout>
        </item>
        <item>
-        <widget class="QPushButton" name="reverse_translate_btn">
+        <widget class="QPushButton" name="pushButton">
          <property name="minimumSize">
           <size>
            <width>50</width>
@@ -98,10 +89,6 @@
          </property>
          <property name="text">
           <string/>
-         </property>
-         <property name="icon">
-          <iconset>
-           <normaloff>../img/arrow_right.png</normaloff>../img/arrow_right.png</iconset>
          </property>
         </widget>
        </item>
