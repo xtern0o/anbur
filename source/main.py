@@ -1,15 +1,23 @@
 import sys
-from source.reg_window import RegWindow
-from PyQt5.QtWidgets import QApplication
+
+from PyQt5.QtWidgets import QApplication, QMainWindow
+
+from design import Ui_MainWindow
 
 
-def except_hook(c, e, t):
-    return sys.__excepthook__(c, e, t)
+class MainWindow(QMainWindow, Ui_MainWindow):
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self)
 
 
-if __name__ == "__main__":
+def except_hook(cls, exception, traceback):
+    sys.__excepthook__(cls, exception, traceback)
+
+
+if __name__ == '__main__':
     app = QApplication(sys.argv)
-    win = RegWindow()
-    win.show()
+    self = MainWindow()
+    self.show()
     sys.excepthook = except_hook
-    sys.exit(app.exec_())
+    sys.exit(app.exec())
