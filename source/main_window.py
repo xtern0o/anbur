@@ -1,18 +1,29 @@
 from PyQt5 import QtWidgets
-from PyQt5.QtGui import QFontDatabase, QFont
-from PyQt5.QtWidgets import QMainWindow, QPushButton, QHBoxLayout
+from PyQt5.QtCore import Qt, pyqtSignal
+from PyQt5.QtGui import QFontDatabase, QFont, QKeySequence
+from PyQt5.QtWidgets import QMainWindow, QPushButton, QHBoxLayout, QWidget, QPlainTextEdit
 
 from anbur import anbur
 from source.design import Ui_MainWindow
 
+keyboard_btn = dict()
+
+class MyPlainTextEdit(QPlainTextEdit):
+    def keyPressEvent(self, event):
+        print(keyboard_btn)
+        key = event.key()
+        keyboard_btn[QKeySequence(key).toString().lower()].animateClick()
+        super(MyPlainTextEdit, self).keyPressEvent(event)
+
 
 class MainWindow(QMainWindow, Ui_MainWindow):
-    def __init__(self, parent=None):
+    def __init__(self):
         super().__init__()
         self.setupUi(self)
         QFontDatabase.addApplicationFont('fonts/Everson Mono.ttf')
         self.font = QFont('Everson Mono')
         self.font.setPointSize(20)
+        self.plain_text_edit_2.setFont(self.font)
         self.matrix = [
             ['ё', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '='],
             ['й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ'],
@@ -44,27 +55,24 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                         btn.setText(word)
                     btn.setMaximumSize(60, 60)
                     btn.setMinimumSize(60, 60)
-                btn.setStyleSheet(
-                    """
-                    QPushButton {
-                        background-color: #ededed;
-                        border-radius: 4px;
-                        border: 1px solid;
-                        box-shadow: 5px 5px 5px black;
-                    }
-                    QPushButton:hover {
-                        background-color: #dbd0b0;
-                        border: 2px solid;
-                    }
-                    """
-                )
-                btn.clicked.connect(self.clicked_on_btn)
                 size_policy = btn.sizePolicy()
                 size_policy.setHeightForWidth(btn.sizePolicy().hasHeightForWidth())
                 btn.setSizePolicy(size_policy)
                 layout.addWidget(btn)
+                keyboard_btn[word] = btn
             self.keyboard_layout.addLayout(layout)
 
-    def clicked_on_btn(self):
-        btn = self.sender()
-        print(btn.text())
+        self.plain_text_edit_1 = MyPlainTextEdit(self)
+        self.plain_text_edit_1.setStyleSheet(self.source_plain_text_edit_1.styleSheet())
+        self.plain_text_edit_1.setFont(self.font)
+        self.texts_layout.replaceWidget(self.source_plain_text_edit_1, self.plain_text_edit_1)
+        self.source_plain_text_edit_1.close()
+        self.plain_text_edit_1.textChanged.connect(self.translate)
+
+    def translate(self):
+        self.plain_text_edit_2.setPlainText('')
+        for word in self.plain_text_edit_1.toPlainText():
+            if word in anbur:
+                self.plain_text_edit_2.insertPlainText(anbur[word])
+            else:
+                self.plain_text_edit_2.insertPlainText(word)
