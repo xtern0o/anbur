@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout" rowstretch="0,1,1" columnstretch="0,0" columnminimumwidth="0,0">
+   <layout class="QGridLayout" name="gridLayout" rowstretch="0,1,1" columnstretch="0,0">
     <item row="1" column="0">
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="0" column="0">
@@ -49,7 +49,7 @@
      </widget>
     </item>
     <item row="2" column="0" colspan="2">
-     <layout class="QGridLayout" name="gridLayout_3"/>
+     <layout class="QVBoxLayout" name="keyboard_layout"/>
     </item>
    </layout>
   </widget>
