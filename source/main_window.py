@@ -4,6 +4,7 @@ from PyQt5.QtGui import QFontDatabase, QFont, QKeySequence
 from PyQt5.QtWidgets import QMainWindow, QPushButton, QHBoxLayout, QWidget, QPlainTextEdit, QApplication
 
 from anbur import anbur
+from config import CONFIG
 from source.design import Ui_MainWindow
 
 keyboard_btn = dict()
@@ -55,6 +56,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         ]
         self.generate_keyboard()
 
+        self.set_initial_stylesheets()
+
+    def set_initial_stylesheets(self):
+        self.frame_2.setStyleSheet(
+            f"""
+            background-color: {CONFIG["keyboard"]["background-color"]}
+            """
+        )
+        self.
+
+
     def generate_keyboard(self):
         for i, row in enumerate(self.matrix):
             layout = QHBoxLayout()
@@ -77,6 +89,25 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                         btn.setText(word)
                     btn.setMaximumSize(60, 60)
                     btn.setMinimumSize(60, 60)
+                btn.setStyleSheet(
+                    f"""
+                    QPushButton {{
+                        border-radius: 2px;
+                        background-color: {CONFIG["keyboard"]["key"]["background-color"]["default"]};
+                        color: {CONFIG["keyboard"]["key"]["text-color"]["default"]};                        
+                    }}
+                    QPushButton:hover {{
+                        background-color: {CONFIG["keyboard"]["key"]["background-color"]["hover"]};
+                        color: {CONFIG["keyboard"]["key"]["text-color"]["hover"]};
+                    }}
+                    QPushButton:pressed {{
+                        background-color: {CONFIG["keyboard"]["key"]["background-color"]["active"]};
+                        color: {CONFIG["keyboard"]["key"]["text-color"]["active"]};
+                    }}
+                    """
+                )
+                btn.setFlat(True)
+                btn.clicked.connect(self.clicked_on_btn)
                 size_policy = btn.sizePolicy()
                 size_policy.setHeightForWidth(btn.sizePolicy().hasHeightForWidth())
                 btn.setSizePolicy(size_policy)
