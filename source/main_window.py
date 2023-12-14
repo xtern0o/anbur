@@ -203,10 +203,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def translate_cirillic_to_anbur(self):
         self.validate()
         self.plain_text_edit_2.setPlainText('')
-        for word in self.plain_text_edit_1.toPlainText():
-            self.plain_text_edit_2.insertPlainText(
-                anbur[word.lower()].upper()) if word.isupper() else self.plain_text_edit_2.insertPlainText(
-                anbur[word]) if word.lower() in anbur else self.plain_text_edit_2.insertPlainText(word)
+        for char in self.plain_text_edit_1.toPlainText():
+            if char.isupper():
+                self.plain_text_edit_2.insertPlainText(anbur[char.lower()].upper())
+            else:
+                if char.lower() in anbur:
+                    self.plain_text_edit_2.insertPlainText(anbur[char])
+                elif char.lower() in GOOD_LETTERS_1 or not char.isalpha():
+                    self.plain_text_edit_2.insertPlainText(char)
+            # self.plain_text_edit_2.insertPlainText(
+            #     anbur[char.lower()].upper()) if char.isupper() else self.plain_text_edit_2.insertPlainText(
+            #     anbur[char]) if char.lower() in anbur else self.plain_text_edit_2.insertPlainText(char)
 
     def validate(self):
         text = self.plain_text_edit_1.toPlainText()
