@@ -1,18 +1,40 @@
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtGui import QFontDatabase, QFont, QKeySequence
-from PyQt5.QtWidgets import QMainWindow, QPushButton, QHBoxLayout, QWidget, QPlainTextEdit
+from PyQt5.QtWidgets import QMainWindow, QPushButton, QHBoxLayout, QWidget, QPlainTextEdit, QApplication
 
 from anbur import anbur
 from source.design import Ui_MainWindow
 
 keyboard_btn = dict()
 
+
 class MyPlainTextEdit(QPlainTextEdit):
+    def __init__(self, parent=None):
+        super(MyPlainTextEdit, self).__init__(parent)
+
     def keyPressEvent(self, event):
-        print(keyboard_btn)
-        key = event.key()
-        keyboard_btn[QKeySequence(key).toString().lower()].animateClick()
+        modifiers = QApplication.keyboardModifiers()
+
+        if modifiers & Qt.ControlModifier:
+            if event.key() == Qt.Key_A:
+                self.selectAll()
+                return
+            elif event.key() == Qt.Key_C:
+                self.copy()
+                return
+            elif event.key() == Qt.Key_V:
+                self.paste()
+                return
+            elif event.key() == Qt.Key_X:
+                self.cut()
+                return
+
+        if event.key() == Qt.Key_Backspace:
+            super(MyPlainTextEdit, self).keyPressEvent(event)
+        # print(keyboard_btn)
+        key = QKeySequence(event.key()).toString().lower()
+        keyboard_btn[key].animateClick()
         super(MyPlainTextEdit, self).keyPressEvent(event)
 
 
@@ -25,11 +47,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.font.setPointSize(20)
         self.plain_text_edit_2.setFont(self.font)
         self.matrix = [
-            ['ё', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '='],
+            ['ё', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'backspace'],
             ['й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ'],
             ['ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э'],
             ['я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю'],
-            ['Ctrl', 'Win', 'Alt', 'Space', 'Alt', 'Ctrl']
+            ['Ctrl', 'Win', 'Alt', 'space', 'Alt', 'Ctrl']
         ]
         self.generate_keyboard()
 
@@ -41,7 +63,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 btn.setFont(self.font)
                 btn.size()
                 if i == 4:
-                    if word == "Space":
+                    if word == "space":
                         w, h = 330, 60
                     else:
                         w, h = 90, 60
