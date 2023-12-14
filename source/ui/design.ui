@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1100</width>
-    <height>600</height>
+    <height>800</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -259,43 +259,43 @@
     <property name="title">
      <string>Файл</string>
     </property>
-    <addaction name="action"/>
+    <addaction name="settings_action"/>
     <addaction name="separator"/>
-    <addaction name="action_3"/>
+    <addaction name="exit_action"/>
    </widget>
    <widget class="QMenu" name="menu_2">
     <property name="title">
      <string>Помощь</string>
     </property>
-    <addaction name="action_4"/>
-    <addaction name="action_5"/>
+    <addaction name="about_action"/>
+    <addaction name="help_action"/>
     <addaction name="separator"/>
-    <addaction name="action_7"/>
+    <addaction name="feedback_action"/>
    </widget>
    <addaction name="menu"/>
    <addaction name="menu_2"/>
   </widget>
-  <action name="action">
+  <action name="settings_action">
    <property name="text">
     <string>Настройки конфигурации</string>
    </property>
   </action>
-  <action name="action_3">
+  <action name="exit_action">
    <property name="text">
     <string>Выход</string>
    </property>
   </action>
-  <action name="action_4">
+  <action name="about_action">
    <property name="text">
     <string>О проекте</string>
    </property>
   </action>
-  <action name="action_5">
+  <action name="help_action">
    <property name="text">
     <string>Помощь</string>
    </property>
   </action>
-  <action name="action_7">
+  <action name="feedback_action">
    <property name="text">
     <string>Обратная связь</string>
    </property>

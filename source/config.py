@@ -18,5 +18,9 @@ CONFIG = {
     },
     "label": {
         "color": "#8c9091",
-    }
+    },
+    "warning": {
+        "border-color": "#c82a2a"
+    },
 }
+GOOD_LETTERS_1 = "йцукенгшщзхъфывапролджэячсмитьбюё"

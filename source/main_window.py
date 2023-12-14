@@ -1,8 +1,9 @@
-from PyQt5.QtGui import QFontDatabase, QFont, QKeySequence
-from PyQt5.QtWidgets import QMainWindow, QPushButton, QHBoxLayout, QWidget, QPlainTextEdit, QApplication
+from PyQt5.QtGui import QFontDatabase, QFont, QIcon, QPixmap
+from PyQt5.QtWidgets import QMainWindow, QPushButton, QHBoxLayout, QPlainTextEdit
+from PyQt5.QtCore import QSize
 
 from source.anbur import anbur
-from source.config import CONFIG
+from source.config import CONFIG, GOOD_LETTERS_1
 from source.design import Ui_MainWindow
 
 keyboard_btn = dict()
@@ -27,6 +28,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         QFontDatabase.addApplicationFont('fonts/Everson Mono.ttf')
 
         self.setWindowTitle("Анбур Переводчик скачать бесплатно на русском бутстрап торрент")
+
+        icon = QIcon()
+        icon.addPixmap(QPixmap("source/img/arrows.png"), QIcon.Normal, QIcon.Off)
+        self.reverse_translate_btn.setIcon(icon)
+        self.reverse_translate_btn.setIconSize(QSize(25, 25))
 
         self.font = QFont('Everson Mono')
         self.font.setPointSize(20)
@@ -82,13 +88,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.plain_text_edit_1.setStyleSheet(
             f"""
             QPlainTextEdit {{
-                padding: 4px;
+                padding: 7px;
                 border-radius: 4px;
                 background-color: {CONFIG["keyboard"]["key"]["background-color"]["default"]};
                 color: {CONFIG["keyboard"]["key"]["text-color"]["default"]};
             }}
             QPlainTextEdit:focus {{
-                padding: 4px;
+                padding: 7px;
                 border-radius: 4px;
                 border: {CONFIG["keyboard"]["border"]};
                 background-color: {CONFIG["keyboard"]["key"]["background-color"]["default"]};
@@ -99,13 +105,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.plain_text_edit_2.setStyleSheet(
             f"""
             QPlainTextEdit {{
-                padding: 4px;
+                padding: 7px;
                 border-radius: 4px;
                 background-color: {CONFIG["keyboard"]["key"]["background-color"]["default"]};
                 color: {CONFIG["keyboard"]["key"]["text-color"]["default"]};
             }}
             QPlainTextEdit:focus {{
-                padding: 4px;
+                padding: 7px;
                 border-radius: 4px;
                 border: {CONFIG["keyboard"]["border"]};
                 background-color: {CONFIG["keyboard"]["key"]["background-color"]["default"]};
@@ -116,18 +122,21 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.reverse_translate_btn.setStyleSheet(
             f"""
             QPushButton {{
+                padding: 20px;
                 border-radius: 2px;
-                background-color: {CONFIG["keyboard"]["key"]["background-color"]["default"]};
-                color: {CONFIG["keyboard"]["key"]["text-color"]["default"]};                        
+                background-color: {CONFIG["keyboard"]["key"]["background-color"]["default"]};                   
             }}
             QPushButton:hover {{
-                background-color: {CONFIG["keyboard"]["key"]["background-color"]["hover"]};
-                color: {CONFIG["keyboard"]["key"]["text-color"]["hover"]};
+                background-color: {CONFIG["keyboard"]["key"]["background-color"]["active"]};
             }}
             QPushButton:pressed {{
                 background-color: {CONFIG["keyboard"]["key"]["background-color"]["active"]};
-                color: {CONFIG["keyboard"]["key"]["text-color"]["active"]};
             }}
+            """
+        )
+        self.statusBar().setStyleSheet(
+            f"""
+            color: {CONFIG["keyboard"]["key"]["text-color"]["default"]}
             """
         )
 
@@ -189,11 +198,57 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.plain_text_edit_1.setFont(self.font)
         self.texts_layout.replaceWidget(self.source_plain_text_edit_1, self.plain_text_edit_1)
         self.source_plain_text_edit_1.close()
-        self.plain_text_edit_1.textChanged.connect(self.translate)
+        self.plain_text_edit_1.textChanged.connect(self.translate_cirillic_to_anbur)
 
-    def translate(self):
+    def translate_cirillic_to_anbur(self):
+        self.validate()
         self.plain_text_edit_2.setPlainText('')
         for word in self.plain_text_edit_1.toPlainText():
             self.plain_text_edit_2.insertPlainText(
                 anbur[word.lower()].upper()) if word.isupper() else self.plain_text_edit_2.insertPlainText(
                 anbur[word]) if word.lower() in anbur else self.plain_text_edit_2.insertPlainText(word)
+
+    def validate(self):
+        text = self.plain_text_edit_1.toPlainText()
+        is_ok = True
+        for char in text:
+            if char.isalpha() and char.lower() not in GOOD_LETTERS_1:
+                is_ok = False
+                break
+        if is_ok:
+            self.plain_text_edit_1.setStyleSheet(
+                f"""
+                QPlainTextEdit {{
+                    padding: 7px;
+                    border-radius: 4px;
+                    background-color: {CONFIG["keyboard"]["key"]["background-color"]["default"]};
+                    color: {CONFIG["keyboard"]["key"]["text-color"]["default"]};
+                }}
+                QPlainTextEdit:focus {{
+                    padding: 7px;
+                    border-radius: 4px;
+                    border: {CONFIG["keyboard"]["border"]};
+                    background-color: {CONFIG["keyboard"]["key"]["background-color"]["default"]};
+                    color: {CONFIG["keyboard"]["key"]["text-color"]["default"]};
+                }}
+                """
+            )
+        else:
+            self.statusBar().showMessage("[!] Некорректный ввод", 5000)
+            self.plain_text_edit_1.setStyleSheet(
+                f"""
+                QPlainTextEdit {{
+                    padding: 7px;
+                    border-radius: 4px;
+                    background-color: {CONFIG["keyboard"]["key"]["background-color"]["default"]};
+                    color: {CONFIG["keyboard"]["key"]["text-color"]["default"]};
+                }}
+                QPlainTextEdit:focus {{
+                    padding: 7px;
+                    border-radius: 4px;
+                    border: 2px solid {CONFIG["warning"]["border-color"]};
+                    background-color: {CONFIG["keyboard"]["key"]["background-color"]["default"]};
+                    color: {CONFIG["keyboard"]["key"]["text-color"]["default"]};
+                }}
+                """
+            )
