@@ -1,6 +1,8 @@
 CONFIG = {
     "keyboard": {
         "background-color": "#1A1A1A",
+        "border": "2px solid #8c9091",
+        "border-color": "#8c9091",
         "key": {
             "background-color": {
                 "default": "#333333",
@@ -14,4 +16,7 @@ CONFIG = {
             },
         },
     },
+    "label": {
+        "color": "#8c9091",
+    }
 }

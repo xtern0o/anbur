@@ -43,9 +43,40 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.set_initial_stylesheets()
 
     def set_initial_stylesheets(self):
+        self.setStyleSheet(
+           f"""
+           #frame {{
+                border-radius: 4px;
+                background-color: {CONFIG["keyboard"]["key"]["background-color"]["default"]}
+           }}
+            QMainWindow {{
+                background-color: {CONFIG["keyboard"]["background-color"]};
+            }}
+            QLabel {{
+                color: {CONFIG["keyboard"]["key"]["text-color"]["default"]}
+            }}
+            QMenuBar {{
+                background-color: {CONFIG["keyboard"]["background-color"]}
+            }}
+            QMenuBar::item {{
+                spacing: 0px;
+                margin-top: 1px;
+                padding: 3px 8px;
+                background-color: {CONFIG["keyboard"]["key"]["background-color"]["default"]};
+                color: {CONFIG["keyboard"]["border-color"]};
+                width: 64px;
+                height: 25px;
+            }}
+            QMenuBar::item:selected {{
+                background-color: {CONFIG["keyboard"]["key"]["background-color"]["active"]};
+                color: {CONFIG["keyboard"]["key"]["text-color"]["active"]};
+            }}
+            """
+
+        )
         self.frame_2.setStyleSheet(
             f"""
-            background-color: {CONFIG["keyboard"]["background-color"]}
+            background-color: {CONFIG["keyboard"]["background-color"]};
             """,
         )
         self.plain_text_edit_1.setStyleSheet(
@@ -53,12 +84,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             QPlainTextEdit {{
                 padding: 4px;
                 border-radius: 4px;
-                background-color: {CONFIG["keyboard"]["background-color"]};
+                background-color: {CONFIG["keyboard"]["key"]["background-color"]["default"]};
                 color: {CONFIG["keyboard"]["key"]["text-color"]["default"]};
             }}
             QPlainTextEdit:focus {{
                 padding: 4px;
                 border-radius: 4px;
+                border: {CONFIG["keyboard"]["border"]};
                 background-color: {CONFIG["keyboard"]["key"]["background-color"]["default"]};
                 color: {CONFIG["keyboard"]["key"]["text-color"]["default"]};
             }}
@@ -69,18 +101,35 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             QPlainTextEdit {{
                 padding: 4px;
                 border-radius: 4px;
-                background-color: {CONFIG["keyboard"]["background-color"]};
+                background-color: {CONFIG["keyboard"]["key"]["background-color"]["default"]};
                 color: {CONFIG["keyboard"]["key"]["text-color"]["default"]};
             }}
             QPlainTextEdit:focus {{
                 padding: 4px;
                 border-radius: 4px;
+                border: {CONFIG["keyboard"]["border"]};
                 background-color: {CONFIG["keyboard"]["key"]["background-color"]["default"]};
                 color: {CONFIG["keyboard"]["key"]["text-color"]["default"]};
             }}
             """
         )
-
+        self.reverse_translate_btn.setStyleSheet(
+            f"""
+            QPushButton {{
+                border-radius: 2px;
+                background-color: {CONFIG["keyboard"]["key"]["background-color"]["default"]};
+                color: {CONFIG["keyboard"]["key"]["text-color"]["default"]};                        
+            }}
+            QPushButton:hover {{
+                background-color: {CONFIG["keyboard"]["key"]["background-color"]["hover"]};
+                color: {CONFIG["keyboard"]["key"]["text-color"]["hover"]};
+            }}
+            QPushButton:pressed {{
+                background-color: {CONFIG["keyboard"]["key"]["background-color"]["active"]};
+                color: {CONFIG["keyboard"]["key"]["text-color"]["active"]};
+            }}
+            """
+        )
 
     def generate_keyboard(self):
         for i, row in enumerate(self.matrix):
