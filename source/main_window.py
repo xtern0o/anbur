@@ -1,9 +1,8 @@
-from PyQt5 import QtWidgets
-from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtGui import QFontDatabase, QFont, QKeySequence
 from PyQt5.QtWidgets import QMainWindow, QPushButton, QHBoxLayout, QWidget, QPlainTextEdit, QApplication
 
 from source.anbur import anbur
+from source.config import CONFIG
 from source.design import Ui_MainWindow
 
 keyboard_btn = dict()
@@ -15,7 +14,7 @@ class MyPlainTextEdit(QPlainTextEdit):
 
     def keyPressEvent(self, event):
         key = event.text().lower()
-        print(key)
+        print(event.key())
         if key in keyboard_btn:
             keyboard_btn[key].animateClick()
         super(MyPlainTextEdit, self).keyPressEvent(event)
@@ -26,6 +25,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         super().__init__()
         self.setupUi(self)
         QFontDatabase.addApplicationFont('fonts/Everson Mono.ttf')
+
+        self.setWindowTitle("Анбур Переводчик скачать бесплатно на русском бутстрап торрент")
+
         self.font = QFont('Everson Mono')
         self.font.setPointSize(20)
         self.plain_text_edit_2.setFont(self.font)
@@ -34,7 +36,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             ['tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', '\\'],
             ['capslock', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э', 'enter'],
             ['shift', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', '.', 'shift'],
-            ['Ctrl', 'Win', 'Alt', 'space', 'Alt', 'Ctrl']
+            ['Ctrl', 'Win', 'Alt', 'space', 'Alt', 'Ctrl'],
         ]
         self.generate_keyboard()
 
@@ -46,6 +48,39 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             background-color: {CONFIG["keyboard"]["background-color"]}
             """,
         )
+        self.plain_text_edit_1.setStyleSheet(
+            f"""
+            QPlainTextEdit {{
+                padding: 4px;
+                border-radius: 4px;
+                background-color: {CONFIG["keyboard"]["background-color"]};
+                color: {CONFIG["keyboard"]["key"]["text-color"]["default"]};
+            }}
+            QPlainTextEdit:focus {{
+                padding: 4px;
+                border-radius: 4px;
+                background-color: {CONFIG["keyboard"]["key"]["background-color"]["default"]};
+                color: {CONFIG["keyboard"]["key"]["text-color"]["default"]};
+            }}
+            """
+        )
+        self.plain_text_edit_2.setStyleSheet(
+            f"""
+            QPlainTextEdit {{
+                padding: 4px;
+                border-radius: 4px;
+                background-color: {CONFIG["keyboard"]["background-color"]};
+                color: {CONFIG["keyboard"]["key"]["text-color"]["default"]};
+            }}
+            QPlainTextEdit:focus {{
+                padding: 4px;
+                border-radius: 4px;
+                background-color: {CONFIG["keyboard"]["key"]["background-color"]["default"]};
+                color: {CONFIG["keyboard"]["key"]["text-color"]["default"]};
+            }}
+            """
+        )
+
 
     def generate_keyboard(self):
         for i, row in enumerate(self.matrix):
@@ -54,18 +89,23 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 btn = QPushButton(self)
                 btn.setFont(self.font)
                 btn.size()
-                if i == 4:
-                    if word == "space":
-                        w, h = 330, 60
-                    else:
-                        w, h = 90, 60
-                        btn.setText(word)
-                    btn.setMaximumSize(w, h)
-                    btn.setMinimumSize(w, h)
-                else:
+                if word in ["tab", "capslock", "shift", "Ctrl", "backspace", "enter"]:
+                    btn.setMaximumSize(300, 60)
+                    btn.setMinimumHeight(60)
                     btn.setText(anbur[word]) if word in anbur else btn.setText(word)
-                    btn.setMaximumSize(60, 60)
-                    btn.setMinimumSize(60, 60)
+                else:
+                    if i == 4:
+                        if word == "space":
+                            w, h = 330, 60
+                        else:
+                            w, h = 90, 60
+                            btn.setText(word)
+                        btn.setMaximumSize(w, h)
+                        btn.setMinimumSize(w, h)
+                    else:
+                        btn.setText(anbur[word]) if word in anbur else btn.setText(word)
+                        btn.setMaximumSize(60, 60)
+                        btn.setMinimumSize(60, 60)
                 btn.setStyleSheet(
                     f"""
                     QPushButton {{
@@ -84,6 +124,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     """
                 )
                 btn.setFlat(True)
+
+                
+
                 # btn.clicked.connect(self.clicked_on_btn)
                 size_policy = btn.sizePolicy()
                 size_policy.setHeightForWidth(btn.sizePolicy().hasHeightForWidth())

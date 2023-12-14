@@ -10,8 +10,8 @@ CONFIG = {
             "text-color": {
                 "default": "white",
                 "hover": "black",
-                "active": "white"
-            }
-        }
-    }
+                "active": "white",
+            },
+        },
+    },
 }

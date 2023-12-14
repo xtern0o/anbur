@@ -6,13 +6,13 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>900</width>
+    <width>1100</width>
     <height>600</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>900</width>
+    <width>1100</width>
     <height>600</height>
    </size>
   </property>
@@ -163,25 +163,12 @@
       </layout>
      </widget>
     </item>
-    <item row="2" column="0">
-     <spacer name="horizontalSpacer_5">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>40</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
     <item row="2" column="1">
      <widget class="QFrame" name="frame_2">
       <property name="minimumSize">
        <size>
-        <width>800</width>
-        <height>330</height>
+        <width>950</width>
+        <height>370</height>
        </size>
       </property>
       <property name="styleSheet">
@@ -203,19 +190,6 @@
       </layout>
      </widget>
     </item>
-    <item row="2" column="2">
-     <spacer name="horizontalSpacer_6">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>40</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
     <item row="1" column="0" colspan="3">
      <layout class="QGridLayout" name="texts_layout">
       <item row="0" column="0">
@@ -223,7 +197,7 @@
         <property name="minimumSize">
          <size>
           <width>300</width>
-          <height>100</height>
+          <height>50</height>
          </size>
         </property>
         <property name="font">
@@ -245,7 +219,7 @@
         <property name="minimumSize">
          <size>
           <width>300</width>
-          <height>100</height>
+          <height>50</height>
          </size>
         </property>
         <property name="font">
@@ -256,9 +230,6 @@
         </property>
         <property name="styleSheet">
          <string notr="true">padding: 2px;</string>
-        </property>
-        <property name="readOnly">
-         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -271,8 +242,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>900</width>
-     <height>21</height>
+     <width>1100</width>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu">
