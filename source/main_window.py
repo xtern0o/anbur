@@ -3,8 +3,7 @@ from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtGui import QFontDatabase, QFont, QKeySequence
 from PyQt5.QtWidgets import QMainWindow, QPushButton, QHBoxLayout, QWidget, QPlainTextEdit, QApplication
 
-from .anbur import anbur
-from source.config import CONFIG
+from source.anbur import anbur
 from source.design import Ui_MainWindow
 
 keyboard_btn = dict()
@@ -15,27 +14,10 @@ class MyPlainTextEdit(QPlainTextEdit):
         super(MyPlainTextEdit, self).__init__(parent)
 
     def keyPressEvent(self, event):
-        modifiers = QApplication.keyboardModifiers()
-
-        if modifiers & Qt.ControlModifier:
-            if event.key() == Qt.Key_A:
-                self.selectAll()
-                return
-            elif event.key() == Qt.Key_C:
-                self.copy()
-                return
-            elif event.key() == Qt.Key_V:
-                self.paste()
-                return
-            elif event.key() == Qt.Key_X:
-                self.cut()
-                return
-
-        if event.key() == Qt.Key_Backspace:
-            super(MyPlainTextEdit, self).keyPressEvent(event)
-        # print(keyboard_btn)
-        key = QKeySequence(event.key()).toString().lower()
-        keyboard_btn[key].animateClick()
+        key = event.text().lower()
+        print(key)
+        if key in keyboard_btn:
+            keyboard_btn[key].animateClick()
         super(MyPlainTextEdit, self).keyPressEvent(event)
 
 
@@ -49,9 +31,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.plain_text_edit_2.setFont(self.font)
         self.matrix = [
             ['ё', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'backspace'],
-            ['й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ'],
-            ['ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э'],
-            ['я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю'],
+            ['tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', '\\'],
+            ['capslock', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э', 'enter'],
+            ['shift', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', '.', 'shift'],
             ['Ctrl', 'Win', 'Alt', 'space', 'Alt', 'Ctrl']
         ]
         self.generate_keyboard()
@@ -81,10 +63,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     btn.setMaximumSize(w, h)
                     btn.setMinimumSize(w, h)
                 else:
-                    if word in anbur:
-                        btn.setText(anbur[word])
-                    else:
-                        btn.setText(word)
+                    btn.setText(anbur[word]) if word in anbur else btn.setText(word)
                     btn.setMaximumSize(60, 60)
                     btn.setMinimumSize(60, 60)
                 btn.setStyleSheet(
@@ -123,7 +102,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def translate(self):
         self.plain_text_edit_2.setPlainText('')
         for word in self.plain_text_edit_1.toPlainText():
-            if word in anbur:
-                self.plain_text_edit_2.insertPlainText(anbur[word])
-            else:
-                self.plain_text_edit_2.insertPlainText(word)
+            self.plain_text_edit_2.insertPlainText(
+                anbur[word.lower()].upper()) if word.isupper() else self.plain_text_edit_2.insertPlainText(
+                anbur[word]) if word.lower() in anbur else self.plain_text_edit_2.insertPlainText(word)
