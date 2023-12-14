@@ -3,6 +3,7 @@ from PyQt5.QtGui import QFontDatabase, QFont
 from PyQt5.QtWidgets import QMainWindow, QPushButton, QHBoxLayout
 
 from anbur import anbur
+from config import CONFIG
 from source.design import Ui_MainWindow
 
 
@@ -21,6 +22,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             ['Ctrl', 'Win', 'Alt', 'Space', 'Alt', 'Ctrl']
         ]
         self.generate_keyboard()
+
+        self.frame_2.setStyleSheet(
+            f"""
+            background-color: {CONFIG["keyboard"]["background-color"]}
+            """
+        )
 
     def generate_keyboard(self):
         for i, row in enumerate(self.matrix):
@@ -45,19 +52,23 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     btn.setMaximumSize(60, 60)
                     btn.setMinimumSize(60, 60)
                 btn.setStyleSheet(
-                    """
-                    QPushButton {
-                        background-color: #ededed;
-                        border-radius: 4px;
-                        border: 1px solid;
-                        box-shadow: 5px 5px 5px black;
-                    }
-                    QPushButton:hover {
-                        background-color: #dbd0b0;
-                        border: 2px solid;
-                    }
+                    f"""
+                    QPushButton {{
+                        border-radius: 2px;
+                        background-color: {CONFIG["keyboard"]["key"]["background-color"]["default"]};
+                        color: {CONFIG["keyboard"]["key"]["text-color"]["default"]};                        
+                    }}
+                    QPushButton:hover {{
+                        background-color: {CONFIG["keyboard"]["key"]["background-color"]["hover"]};
+                        color: {CONFIG["keyboard"]["key"]["text-color"]["hover"]};
+                    }}
+                    QPushButton:pressed {{
+                        background-color: {CONFIG["keyboard"]["key"]["background-color"]["active"]};
+                        color: {CONFIG["keyboard"]["key"]["text-color"]["active"]};
+                    }}
                     """
                 )
+                btn.setFlat(True)
                 btn.clicked.connect(self.clicked_on_btn)
                 size_policy = btn.sizePolicy()
                 size_policy.setHeightForWidth(btn.sizePolicy().hasHeightForWidth())
