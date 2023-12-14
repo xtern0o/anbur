@@ -3,8 +3,8 @@ from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtGui import QFontDatabase, QFont, QKeySequence
 from PyQt5.QtWidgets import QMainWindow, QPushButton, QHBoxLayout, QWidget, QPlainTextEdit, QApplication
 
-from anbur import anbur
-from config import CONFIG
+from .anbur import anbur
+from source.config import CONFIG
 from source.design import Ui_MainWindow
 
 keyboard_btn = dict()
@@ -62,10 +62,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.frame_2.setStyleSheet(
             f"""
             background-color: {CONFIG["keyboard"]["background-color"]}
-            """
+            """,
         )
-        self.
-
 
     def generate_keyboard(self):
         for i, row in enumerate(self.matrix):
@@ -107,7 +105,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     """
                 )
                 btn.setFlat(True)
-                btn.clicked.connect(self.clicked_on_btn)
+                # btn.clicked.connect(self.clicked_on_btn)
                 size_policy = btn.sizePolicy()
                 size_policy.setHeightForWidth(btn.sizePolicy().hasHeightForWidth())
                 btn.setSizePolicy(size_policy)
