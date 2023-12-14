@@ -23,11 +23,16 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         ]
         self.generate_keyboard()
 
+        self.set_initial_stylesheets()
+
+    def set_initial_stylesheets(self):
         self.frame_2.setStyleSheet(
             f"""
             background-color: {CONFIG["keyboard"]["background-color"]}
             """
         )
+        self.
+
 
     def generate_keyboard(self):
         for i, row in enumerate(self.matrix):
