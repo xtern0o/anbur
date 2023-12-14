@@ -56,7 +56,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 color: {CONFIG["keyboard"]["key"]["text-color"]["default"]}
             }}
             QMenuBar {{
-                background-color: {CONFIG["keyboard"]["background-color"]}
+                background-color: {CONFIG["keyboard"]["key"]["background-color"]["default"]}
             }}
             QMenuBar::item {{
                 spacing: 0px;
