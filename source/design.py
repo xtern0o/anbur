@@ -15,12 +15,12 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1100, 800)
-        MainWindow.setMinimumSize(QtCore.QSize(1100, 600))
+        MainWindow.setMinimumSize(QtCore.QSize(1200, 600))
         MainWindow.setMaximumSize(QtCore.QSize(16777215, 16777215))
         MainWindow.setStyleSheet("#frame, #frame_2 {\n"
-"    border-radius: 4px;\n"
-"    border: 1px solid;\n"
-"}")
+                                 "    border-radius: 4px;\n"
+                                 "    border: 1px solid;\n"
+                                 "}")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayout = QtWidgets.QGridLayout(self.centralwidget)
@@ -50,9 +50,9 @@ class Ui_MainWindow(object):
         self.frame_2 = QtWidgets.QFrame(self.centralwidget)
         self.frame_2.setMinimumSize(QtCore.QSize(950, 370))
         self.frame_2.setStyleSheet("#frame_2 {\n"
-"    background: qlineargradient(x1:0, y1:0, x2:1, y2:1,\n"
-"                  stop:0 #cacaca, stop:1 #faeecb)\n"
-"}")
+                                   "    background: qlineargradient(x1:0, y1:0, x2:1, y2:1,\n"
+                                   "                  stop:0 #cacaca, stop:1 #faeecb)\n"
+                                   "}")
         self.frame_2.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_2.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_2.setObjectName("frame_2")
