@@ -10,6 +10,7 @@
 *.so.*
 *.dll
 *.dylib
+.idea/
 
 # Qt-es
 object_script.*.Release
@@ -165,6 +166,7 @@ celerybeat.pid
 .env
 .venv
 env/
+.venv/
 venv/
 ENV/
 env.bak/
@@ -193,6 +195,5 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
-
 .DS_Store
 
